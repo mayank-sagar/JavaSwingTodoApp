@@ -2,7 +2,9 @@ package application;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -26,9 +28,12 @@ import models.Todo;
 import models.TodoManager;
 
 public class TodoApplication extends JFrame{
+	
+	private CardLayout centerLayout;
+	private JPanel centerPanel;
 
 	private TodoApplication() {
-		super("Todo List");
+		super("Todo's");
 		setSize(500,400);
 	    BorderLayout layout = new BorderLayout();
 	    layout.setHgap(10);
@@ -37,6 +42,9 @@ public class TodoApplication extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon(getClass().getResource("/assets/icon.png"));
 		setIconImage(icon.getImage());
+		centerLayout = new CardLayout();
+		centerPanel = new JPanel();
+		centerPanel.setLayout(centerLayout);
 	}
 	
 	public static void launch() {
@@ -74,6 +82,14 @@ public class TodoApplication extends JFrame{
 		titleField.setPreferredSize(new Dimension(100,30));
 		JTextField desciptionField =  new JTextField(10);
 		JButton addBtn = new JButton("Add Todo");
+		addBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				centerLayout.show(centerPanel, LayoutConstants.SUCCESS_ADDED);
+			}
+			
+		});
 		gbc.gridheight = 1;
 		gbc.gridwidth = 1;
 		gbc.gridx = 0;
@@ -106,20 +122,35 @@ public class TodoApplication extends JFrame{
 	
 	
 	private JPanel buildCenter(JMenuBar menu, CenterLayout... layouts) {
-		CardLayout layout = new CardLayout();
-		JPanel centerPanel = new JPanel();
-		centerPanel.setLayout(layout);
+		JPanel successPanel  = this.buildSuccessPanel("Successfully Item added","Back","Go to listing",
+				new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						centerLayout.show(centerPanel, LayoutConstants.TODO_FORM);
+						
+					}
+			
+		},new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				centerLayout.show(centerPanel, LayoutConstants.LIST_TODOS);
+			}
+	
+		});
 		for(CenterLayout cl : layouts) {
 			centerPanel.add(cl.getPanel(),cl.getName());
 		}
-		layout.show(centerPanel, layouts[0].getName());
+		centerPanel.add(successPanel,LayoutConstants.SUCCESS_ADDED);
+		centerLayout.show(centerPanel, layouts[0].getName());
 		JMenuItem addTodoItem = menu.getMenu(0).getItem(0);
 		JMenuItem addListItem = menu.getMenu(0).getItem(1);
 		addTodoItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				layout.show(centerPanel, LayoutConstants.TODO_FORM);
+				centerLayout.show(centerPanel, LayoutConstants.TODO_FORM);
 			}
 			
 		});
@@ -127,7 +158,7 @@ public class TodoApplication extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				layout.show(centerPanel, LayoutConstants.LIST_TODOS);
+				centerLayout.show(centerPanel, LayoutConstants.LIST_TODOS);
 			}
 			
 		});
@@ -168,6 +199,42 @@ public class TodoApplication extends JFrame{
 		return panel;
 	}
 	
+	
+	private JPanel buildSuccessPanel(String message,String actionOne,String actionTwo,
+			ActionListener actionListenerOne,ActionListener actionListenerTwo) {
+		JPanel panel = new JPanel();
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
+		panel.setLayout(gridBagLayout);
+		JLabel messageLabel = new JLabel(message);
+		messageLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		messageLabel.setForeground(new Color(0,128,0));
+		JButton actionButtonOne = new JButton(actionOne);
+		actionButtonOne.setName("actionOne");
+		actionButtonOne.addActionListener(actionListenerOne);
+		JButton actionButtonTwo = new JButton(actionTwo);
+		actionButtonTwo.setName("actionTwo");
+		actionButtonTwo.addActionListener(actionListenerTwo);
+		gbc.gridheight = 1;
+		gbc.gridwidth = 2;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weighty = 0.1;
+		panel.add(messageLabel,gbc);
+		gbc.gridheight = 1;
+		gbc.gridwidth = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weighty = 0;
+		panel.add(actionButtonOne,gbc);
+		gbc.gridheight = 1;
+		gbc.gridwidth = 1;
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		panel.add(actionButtonTwo,gbc);
+		return panel;
+		
+	}
 	
 	
 	private void  run() {
