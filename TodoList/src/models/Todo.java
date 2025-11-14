@@ -3,17 +3,17 @@ package models;
 public class Todo {
 
 	
+	private int id;
 	private String name;
 	private String description;
 	private boolean completed;
 	
 	
 	public Todo(String name, String  description) {
-		
+		this.id = (int)(Math.random() * 10000);
 		this.name = name;
 		this.description  = description;
 		this.completed = false;
-		
 	}
 	
 	
@@ -44,6 +44,10 @@ public class Todo {
 
 	public void makeComplete() {
 		this.completed = !this.completed;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 
 	

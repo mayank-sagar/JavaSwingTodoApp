@@ -8,7 +8,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import constants.ButtonConstants;
+import constants.LayoutConstants;
 import controls.ControlManager;
+import models.ControlData;
+import validations.MaxLengthValidation;
+import validations.RequiredValidation;
+import validations.ValidationFields;
+import validations.ValidationManager;
 
 public class TodoFormPanel extends GridPanel {
 	private static final long serialVersionUID = 1L;
@@ -34,5 +40,24 @@ public class TodoFormPanel extends GridPanel {
 		add(desc,getGridBagDimensions(1,1,0,1, 0, GridBagConstraints.WEST));
 		add(desciptionField,getGridBagDimensions(1,1,1,1, 0, GridBagConstraints.WEST));
 		add(addBtn,getGridBagDimensions(2,1,0,2, 0, GridBagConstraints.CENTER));
+		ControlData controlData = manager.getControlData();
+		controlData.titleTextField  = this.titleField;
+		controlData.descTextField   = this.desciptionField;
+		manager.addValidationFields(LayoutConstants.TODO_FORM_VALIDATION, createValidations());
+	}
+	
+	
+	private ValidationManager createValidations() {
+		ValidationFields fieldTitle = new ValidationFields(titleField);
+		ValidationFields fieldDec = new ValidationFields(desciptionField);
+		fieldTitle.add(new RequiredValidation("Title"));
+		fieldTitle.add(new MaxLengthValidation("Title",20));
+		fieldDec.add(new RequiredValidation("Description"));
+		fieldDec.add(new MaxLengthValidation("Description",80));
+		ValidationManager manager = new ValidationManager();
+		manager.addField(fieldTitle);
+		manager.addField(fieldDec);
+		return manager;
+		
 	}
 }

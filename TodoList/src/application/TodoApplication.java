@@ -48,7 +48,7 @@ public class TodoApplication extends MainFrame {
 		for(CenterLayout cl : layouts) {
 			centerPanel.add(cl.getPanel(),cl.getName());
 		}
-		centerLayout.show(centerPanel, layouts[0].getName());
+		centerLayout.show(centerPanel, layouts[1].getName());
 		return centerPanel;
 	}
 	
