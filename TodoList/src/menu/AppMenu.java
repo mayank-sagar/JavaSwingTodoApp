@@ -1,9 +1,12 @@
 package menu;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -13,24 +16,38 @@ public class AppMenu extends JMenuBar {
 	
 	private static final long serialVersionUID = 1L;
 
-	private AppMenu(ArrayList<JMenu> menus) {
+	private AppMenu(ArrayList<AppJMenu> menus) {
 		for(JMenu menu: menus) {
+			menu.setOpaque(true);
+//			menu.setBackground(Color.TRANSLUCENT);
+//			menu.setUI(null);
+			menu.setBackground(new Color(196, 229, 56));
+			menu.setForeground(Color.BLACK);
 			add(menu);
 		}
+		setOpaque(true);
+		setBackground(new Color(196, 229, 56));
+		setBorder(BorderFactory.createEmptyBorder());
 	}
+	
+	   public void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        g.setColor(new Color(196, 229, 56));
+	        g.fillRect(0, 0, getWidth(), getHeight());
+	    }
 	
 	public static class AppMenuBuilder {
 		
-		private ArrayList<JMenu> menus;
+		private ArrayList<AppJMenu> menus;
 		private HashMap<String,HashMap<String, JMenuItem>> mapMenus;
 		
 		public AppMenuBuilder() {
-			menus = new ArrayList<JMenu>();
+			menus = new ArrayList<AppJMenu>();
 			mapMenus = new HashMap<String,HashMap<String, JMenuItem>>();
 		}
 		
 		public AppMenuBuilder addMenu(String name, String menuId) {
-			JMenu menu  = new JMenu(name);
+			AppJMenu menu  = new AppJMenu(name);
 			menu.setName(menuId);
 			menus.add(menu);
 			mapMenus.put(menuId,new HashMap<String, JMenuItem>());

@@ -1,7 +1,7 @@
 package panels;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import constants.ButtonConstants;
 import constants.LayoutConstants;
 import controls.ControlManager;
+import custom.AppJButton;
 import interfaces.CotrollableControl;
 import models.ControlData;
 import models.Todo;
@@ -43,18 +44,21 @@ public class TodoListPanel extends JPanel implements CotrollableControl {
 		} else {
 			mainLayout.show(this, LayoutConstants.TODO_ITEMS_PANEL);
 		}
+		this.setBackground(new Color(163, 203, 56));
 	}
 
 	
 	
 	private void initilizeEmptyLayoutIfEmpty() {
 			JPanel emptyPanel = emptyPanel();
+			emptyPanel.setBackground(new Color(163, 203, 56));
 			add(emptyPanel, LayoutConstants.TODO_EMPTY_ITEMS_PANEL);
 	}
 	
 	
 	private void initilizeTodoPanel() {
 			todoPanel = new JPanel();
+			todoPanel.setBackground(new Color(163, 203, 56));
 			BoxLayout todoLayout  = new BoxLayout(todoPanel,BoxLayout.Y_AXIS);
 			todoPanel.setLayout(todoLayout);
 			add(todoPanel, LayoutConstants.TODO_ITEMS_PANEL);
@@ -70,7 +74,7 @@ public class TodoListPanel extends JPanel implements CotrollableControl {
 		panel.setLayout(emptyInnerLayout);
 		GridBagConstraints gbc = new GridBagConstraints();
 		JLabel message = new JLabel("Hurray, No todo's available.");
-		JButton button = new JButton(ButtonConstants.CREATE_NEW_BTN);
+		JButton button = new AppJButton(ButtonConstants.CREATE_NEW_BTN);
 		button.setName(ButtonConstants.CREATE_NEW_BTN_ID);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -88,6 +92,7 @@ public class TodoListPanel extends JPanel implements CotrollableControl {
 	
 	private JPanel buildTodoItem(Todo todo) {
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(163, 203, 56));
 		JLabel title = new JLabel(todo.getName());
 		JCheckBox completed = new JCheckBox("",todo.isCompleted());
 		JButton remove = new JButton(ButtonConstants.DELETE_BUTTON);

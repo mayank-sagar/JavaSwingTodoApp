@@ -1,5 +1,6 @@
 package panels;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -12,6 +13,7 @@ public abstract class GridPanel extends JPanel {
 	public GridPanel() {
 		layout = new GridBagLayout();
 		setLayout(layout);
+		this.setBackground(new Color(163, 203, 56));
 	}
 	protected GridBagConstraints getGridBagDimensions(int gridwidth,int gridheight,int gridx, int gridy, float weighty, int anchor) {
 		GridBagConstraints gbc = new GridBagConstraints();

@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import constants.ButtonConstants;
 import constants.LayoutConstants;
 import controls.ControlManager;
+import custom.AppJButton;
 import models.ControlData;
 import validations.MaxLengthValidation;
 import validations.RequiredValidation;
@@ -24,6 +25,7 @@ public class TodoFormPanel extends GridPanel {
 	private JTextField desciptionField;
 	private JButton addBtn;
 	
+	
 	public TodoFormPanel() {
 		ControlManager manager = ControlManager.getInstance();
 		setSize(300,100);
@@ -32,7 +34,7 @@ public class TodoFormPanel extends GridPanel {
 		titleField =  new JTextField(10);
 		titleField.setPreferredSize(new Dimension(100,30));
 		desciptionField =  new JTextField(10);
-		addBtn = new JButton(ButtonConstants.ADD_TODO_BTN);
+		addBtn = new AppJButton(ButtonConstants.ADD_TODO_BTN);
 		addBtn.setName(ButtonConstants.ADD_TODO_BTN_ID);
 		addBtn.addActionListener(manager.getButtonActionListener());
 		add(title,getGridBagDimensions(1,1,0,0, 0, GridBagConstraints.WEST));

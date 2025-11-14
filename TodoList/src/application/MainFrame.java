@@ -2,6 +2,7 @@ package application;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ public class MainFrame extends JFrame {
 	protected static final long serialVersionUID = 1L;
 	protected CardLayout centerLayout;
 	protected JPanel centerPanel;
+	 
 	
 	MainFrame(String name) {
 		super(name);
@@ -36,8 +38,13 @@ public class MainFrame extends JFrame {
 		ControlData controlData = manager.getControlData();
 		controlData.centerLayout = centerLayout;
 		controlData.centerPanel = centerPanel;
+		getContentPane().setBackground(new Color(163, 203, 56));
 	}
 	
+	
+	
+	 
+	  
 	protected JMenuBar buildMainMenu() {
 		return new AppMenu.AppMenuBuilder()
 				.addMenu(MenuConstants.MENU_ONE_NAME, MenuConstants.MENU_ONE_ID)
