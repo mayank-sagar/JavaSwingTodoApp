@@ -19,8 +19,6 @@ public class AppMenu extends JMenuBar {
 	private AppMenu(ArrayList<AppJMenu> menus) {
 		for(JMenu menu: menus) {
 			menu.setOpaque(true);
-//			menu.setBackground(Color.TRANSLUCENT);
-//			menu.setUI(null);
 			menu.setBackground(new Color(196, 229, 56));
 			menu.setForeground(Color.BLACK);
 			add(menu);
